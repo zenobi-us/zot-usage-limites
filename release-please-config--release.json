@@ -5,7 +5,7 @@
   "bump-patch-for-minor-pre-major": true,
   "packages": {
     ".": {
-      "component": "zot-extension-template-golang",
+      "component": "zot-usage-limites",
       "release-type": "go",
       "extra-files": ["extension.json"]
     }

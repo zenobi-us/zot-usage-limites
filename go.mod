@@ -1,4 +1,4 @@
-module github.com/zenobi-us/zot-extension-template-golang
+module github.com/zenobi-us/zot-usage-limites
 
 go 1.25.0
 

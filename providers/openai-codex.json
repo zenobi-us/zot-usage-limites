@@ -1,0 +1,30 @@
+{
+  "id": "openai-codex",
+  "display_name": "OpenAI Codex",
+  "auth": {
+    "provider": "openai",
+    "mode": "oauth"
+  },
+  "request": {
+    "method": "GET",
+    "url": "https://chatgpt.com/backend-api/wham/usage",
+    "headers": {
+      "chatgpt-account-id": "$auth.account_id",
+      "originator": "zot-usage-limites"
+    }
+  },
+  "windows": [
+    {
+      "name": "Primary window",
+      "used_percent": "/rate_limit/primary_window/used_percent",
+      "reset_at": "/rate_limit/primary_window/reset_at",
+      "unit": "percent"
+    },
+    {
+      "name": "Secondary window",
+      "used_percent": "/rate_limit/secondary_window/used_percent",
+      "reset_at": "/rate_limit/secondary_window/reset_at",
+      "unit": "percent"
+    }
+  ]
+}

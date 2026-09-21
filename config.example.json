@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "cache_ttl_seconds": 60,
+  "providers": {
+    "openai-codex": {
+      "enabled": true,
+      "definition": "openai-codex.json"
+    }
+  }
+}

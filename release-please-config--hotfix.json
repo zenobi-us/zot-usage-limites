@@ -4,7 +4,7 @@
   "versioning": "always-bump-patch",
   "packages": {
     ".": {
-      "component": "zot-extension-template-golang",
+      "component": "zot-usage-limites",
       "release-type": "go",
       "extra-files": ["extension.json"]
     }

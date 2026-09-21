@@ -1,0 +1,9 @@
+{
+  "name": "zot-extension-template-golang",
+  "version": "0.2.0",
+  "exec": "go",
+  "args": ["run", "main.go"],
+  "language": "go",
+  "description": "A Go template for building zot extensions",
+  "enabled": true
+}

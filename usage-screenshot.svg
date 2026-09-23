@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="693" height="309" viewBox="0 0 693 309" role="img" aria-labelledby="title desc">
+  <title id="title">zot /usage panel</title>
+  <desc id="desc">Screenshot-style rendering of the zot usage panel showing OpenAI Codex usage limits.</desc>
+  <rect width="693" height="309" fill="#1d1a29"/>
+  <g fill="#8b82b5" font-family="monospace" font-size="14">
+    <text x="8" y="20" fill="#f3dce8">/usage</text>
+    <text x="8" y="51">OpenAI Codex usage limits</text>
+    <text x="8" y="70" fill="#d6d0df">✓ Primary window        <tspan x="184">14% used</tspan></text>
+    <text x="25" y="87">resets in 98h12m0s</text>
+    <text x="8" y="106" fill="#d6d0df">✓ Secondary window        <tspan x="201">unavailable</tspan></text>
+    <text x="8" y="140">updated now</text>
+    <text x="8" y="174">↑/↓ move   r refresh   v verbose   s settings   esc close</text>
+    <text x="25" y="275">(openai-codex) gpt-5.6-luna  reasoning: medium ↑877k ↓13k R2.6M $1.217 (sub) 23.2%</text>
+    <text x="25" y="294">/run/media/zenobius/Store/Projects/Mine/Github/zot-usage-limits</text>
+  </g>
+  <g stroke="#e9c7d8" stroke-width="1">
+    <line x1="8" y1="15" x2="692" y2="15"/>
+    <line x1="8" y1="202" x2="692" y2="202"/>
+  </g>
+  <rect x="8" y="229" width="4" height="17" fill="#e9c7d8"/>
+</svg>

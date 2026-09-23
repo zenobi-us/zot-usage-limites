@@ -30,6 +30,8 @@ The panel shows `Request pending… Ns` while usage requests are in flight, then
 renders every detected provider. Press `r` to refresh, or `v` to toggle verbose
 output with provider, plan, unit, and fetch-time details.
 
+![The `/usage` panel showing provider usage limits](usage-screenshot.svg)
+
 Configuration is optional. To override the cache TTL or disable a detected
 provider, create `$ZOT_HOME/zot-usage-limits.json`:
 

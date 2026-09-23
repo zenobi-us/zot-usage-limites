@@ -1,5 +1,7 @@
 # zot-usage-limits
 
+![zot-usage-limits](./screenshot.png)
+
 A Go extension for zot that reports provider usage limits through `/usage`.
 
 The first provider is ChatGPT/Codex subscription usage. Provider requests and response mappings live in JSON so additional providers can be added without changing the report renderer.

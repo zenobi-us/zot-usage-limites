@@ -17,30 +17,33 @@ zot ext install .
 
 The extension reads zot's existing `$ZOT_HOME/auth.json`. Install only extensions you trust: this extension needs to read the OpenAI OAuth token in that file to query the Codex endpoint. It never prints or logs the token.
 
-## Enable
+## Use
 
-Create `$ZOT_HOME/zot-usage-limites.json`:
-
-```json
-{
-  "enabled": true,
-  "cache_ttl_seconds": 60,
-  "providers": {
-    "openai-codex": {
-      "enabled": true,
-      "definition": "openai-codex.json"
-    }
-  }
-}
-```
-
-Then restart zot and run:
+Run:
 
 ```text
 /limits
 ```
 
-A missing configuration file, or `enabled: false`, leaves the command available but disabled.
+The extension scans the bundled provider definitions and automatically enables
+only providers whose credentials are present and valid in `$ZOT_HOME/auth.json`.
+The panel shows `Request pending… Ns` while usage requests are in flight, then
+renders every detected provider. Press `r` to refresh, or `v` to toggle verbose
+output with provider, plan, unit, and fetch-time details.
+
+Configuration is optional. To override the cache TTL or disable a detected
+provider, create `$ZOT_HOME/zot-usage-limites.json`:
+
+```json
+{
+  "cache_ttl_seconds": 60,
+  "providers": {
+    "openai-codex": { "enabled": false }
+  }
+}
+```
+
+A provider is never queried when its required auth key or OAuth token is absent.
 
 ## Provider definitions
 

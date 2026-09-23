@@ -85,3 +85,57 @@ func TestExpiredOAuthIsRejected(t *testing.T) {
 		t.Fatalf("error = %v, want expired credential error", err)
 	}
 }
+
+func TestDetectProvidersUsesCredentials(t *testing.T) {
+	home := t.TempDir()
+	t.Setenv("ZOT_HOME", home)
+	if err := os.WriteFile(filepath.Join(home, "auth.json"), []byte(`{"openai":{"oauth":{"access_token":"token","account_id":"acct"}}}`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	providersDir := filepath.Join(home, "providers")
+	if err := os.MkdirAll(providersDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	definition := `{"id":"openai-codex","display_name":"OpenAI Codex","auth":{"provider":"openai","mode":"oauth"},"request":{"url":"https://example.test/usage"},"windows":[]}`
+	if err := os.WriteFile(filepath.Join(providersDir, "available.json"), []byte(definition), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	missing := strings.Replace(definition, "openai-codex", "missing-provider", 1)
+	missing = strings.Replace(missing, `"provider":"openai"`, `"provider":"missing"`, 1)
+	if err := os.WriteFile(filepath.Join(providersDir, "missing.json"), []byte(missing), 0o600); err != nil {
+		t.Fatal(err)
+	}
+
+	a := &app{root: home, cache: make(map[string]cachedReport)}
+	found, err := a.detectProviders()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(found) != 1 || found[0].Definition.ID != "openai-codex" {
+		t.Fatalf("detected providers = %#v", found)
+	}
+}
+
+func TestPanelShowsPendingTimer(t *testing.T) {
+	a := &app{}
+	a.setPending(true)
+	a.panelMu.Lock()
+	a.panel.pendingSince = time.Now().Add(-2 * time.Second)
+	a.panelMu.Unlock()
+	lines := a.panelLines("")
+	if len(lines) != 1 || !strings.HasPrefix(lines[0], "Request pending… ") || !strings.Contains(lines[0], "2s") {
+		t.Fatalf("pending lines = %#v", lines)
+	}
+}
+
+func TestPanelVerboseToggleUsesVerboseLines(t *testing.T) {
+	a := &app{}
+	a.setPanelLines([]string{"summary"}, []string{"summary", "provider test-provider"})
+	if got := a.panelLines(""); len(got) != 1 || got[0] != "summary" {
+		t.Fatalf("default panel lines = %#v", got)
+	}
+	a.toggleVerbose()
+	if got := a.panelLines(""); len(got) != 2 || got[1] != "provider test-provider" {
+		t.Fatalf("verbose panel lines = %#v", got)
+	}
+}

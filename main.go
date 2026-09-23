@@ -15,7 +15,7 @@ import (
 	"github.com/patriceckhart/zot/packages/agent/ext"
 )
 
-const extensionName = "zot-usage-limites"
+const extensionName = "zot-usage-limits"
 
 var version = "0.1.0"
 
@@ -119,11 +119,11 @@ type cachedReport struct {
 func main() {
 	a := &app{cache: make(map[string]cachedReport)}
 	e := ext.New(extensionName, version)
-	e.Command("limits", "show provider usage limits", func(string) ext.Response {
+	e.Command("usage", "show provider usage limits", func(string) ext.Response {
 		a.resetPanel()
 		a.setPending(true)
 		go a.refreshPanel(e)
-		return ext.OpenPanel(limitsPanelID, "/limits", a.panelLines(""), panelFooter(false))
+		return ext.OpenPanel(limitsPanelID, "/usage", a.panelLines(""), panelFooter(false))
 	})
 	e.OnPanelKey(limitsPanelID, func(key, text string) {
 		if key == "rune" {
@@ -137,7 +137,7 @@ func main() {
 		case "esc":
 			if a.inSettings() {
 				a.setSettings(false)
-				e.RenderPanel(limitsPanelID, "/limits", a.panelLines(""), panelFooter(false))
+				e.RenderPanel(limitsPanelID, "/usage", a.panelLines(""), panelFooter(false))
 			}
 		case "r":
 			a.setPending(true)
@@ -187,9 +187,9 @@ func (a *app) moveSelection(delta int) {
 
 func (a *app) panelTitle() string {
 	if a.inSettings() {
-		return "/limits / settings"
+		return "/usage / settings"
 	}
-	return "/limits"
+	return "/usage"
 }
 
 func panelFooter(settings bool) string {
@@ -278,13 +278,13 @@ func (a *app) refreshPanel(e *ext.Extension) {
 	cfg, err := loadConfig(zotHome())
 	if err != nil && !errors.Is(err, os.ErrNotExist) {
 		a.setPending(false)
-		e.RenderPanel(limitsPanelID, "/limits", []string{"Configuration error: " + err.Error()}, panelFooter(a.inSettings()))
+		e.RenderPanel(limitsPanelID, "/usage", []string{"Configuration error: " + err.Error()}, panelFooter(a.inSettings()))
 		return
 	}
 	candidates, err := a.detectProviders()
 	if err != nil {
 		a.setPending(false)
-		e.RenderPanel(limitsPanelID, "/limits", []string{"Provider detection error: " + err.Error()}, panelFooter(a.inSettings()))
+		e.RenderPanel(limitsPanelID, "/usage", []string{"Provider detection error: " + err.Error()}, panelFooter(a.inSettings()))
 		return
 	}
 	lines := []string{}
@@ -392,13 +392,13 @@ func panelReportLines(report usageReport, verbose bool) []string {
 func (a *app) render() string {
 	cfg, err := loadConfig(zotHome())
 	if errors.Is(err, os.ErrNotExist) {
-		return "Usage limits are disabled. Create $ZOT_HOME/zot-usage-limites.json with {\"enabled\": true} to enable them."
+		return "Usage limits are disabled. Create $ZOT_HOME/zot-usage-limits.json with {\"enabled\": true} to enable them."
 	}
 	if err != nil {
 		return "Usage limits configuration error: " + err.Error()
 	}
 	if !cfg.Enabled {
-		return "Usage limits are disabled in $ZOT_HOME/zot-usage-limites.json."
+		return "Usage limits are disabled in $ZOT_HOME/zot-usage-limits.json."
 	}
 	if !cfg.Providers["openai-codex"].Enabled {
 		return "OpenAI Codex usage limits are disabled in the extension configuration."
@@ -534,7 +534,7 @@ func authAvailable(home string, spec authSpec) bool {
 
 func loadConfig(home string) (config, error) {
 	var cfg config
-	data, err := os.ReadFile(filepath.Join(home, "zot-usage-limites.json"))
+	data, err := os.ReadFile(filepath.Join(home, "zot-usage-limits.json"))
 	if err != nil {
 		return cfg, err
 	}

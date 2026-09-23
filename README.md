@@ -1,6 +1,6 @@
-# zot-usage-limites
+# zot-usage-limits
 
-A Go extension for zot that reports provider usage limits through `/limits`.
+A Go extension for zot that reports provider usage limits through `/usage`.
 
 The first provider is ChatGPT/Codex subscription usage. Provider requests and response mappings live in JSON so additional providers can be added without changing the report renderer.
 
@@ -11,8 +11,7 @@ Codex support is feature-flagged and uses the unofficial ChatGPT backend usage e
 ## Build and install
 
 ```sh
-go build -o zot-usage-limites .
-zot ext install .
+zot ext install https://github.com/zenobi-us/zot-usage-limits
 ```
 
 The extension reads zot's existing `$ZOT_HOME/auth.json`. Install only extensions you trust: this extension needs to read the OpenAI OAuth token in that file to query the Codex endpoint. It never prints or logs the token.
@@ -22,7 +21,7 @@ The extension reads zot's existing `$ZOT_HOME/auth.json`. Install only extension
 Run:
 
 ```text
-/limits
+/usage
 ```
 
 The extension scans the bundled provider definitions and automatically enables
@@ -32,7 +31,7 @@ renders every detected provider. Press `r` to refresh, or `v` to toggle verbose
 output with provider, plan, unit, and fetch-time details.
 
 Configuration is optional. To override the cache TTL or disable a detected
-provider, create `$ZOT_HOME/zot-usage-limites.json`:
+provider, create `$ZOT_HOME/zot-usage-limits.json`:
 
 ```json
 {

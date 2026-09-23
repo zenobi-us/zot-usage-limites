@@ -56,7 +56,7 @@ jobs:
           stable="$(jq -r .version extension.json)"
           if [[ "${CHANNEL}" == latest ]]; then
             version="${stable}"
-            tag="zot-usage-limites-v${version}"
+            tag="zot-usage-limits-v${version}"
           else
             IFS=. read -r major minor patch <<<"${stable}"
             if [[ "${SOURCE_BRANCH}" == release/* ]]; then
@@ -65,7 +65,7 @@ jobs:
               next="${major}.$((minor + 1)).0"
             fi
             version="${next}-next.${GITHUB_RUN_NUMBER}"
-            tag="zot-usage-limites-v${version}"
+            tag="zot-usage-limits-v${version}"
           fi
           echo "version=${version}" >> "${GITHUB_OUTPUT}"
           echo "tag=${tag}" >> "${GITHUB_OUTPUT}"
@@ -80,7 +80,7 @@ jobs:
             IFS=/ read -r goos goarch <<<"${target}"
             suffix=""
             [[ "${goos}" == windows ]] && suffix=.exe
-            name="zot-usage-limites-${goos}-${goarch}"
+            name="zot-usage-limits-${goos}-${goarch}"
             GOOS="${goos}" GOARCH="${goarch}" CGO_ENABLED=0 \
               go build -trimpath -ldflags "-s -w -X main.version=${VERSION}" -o "dist/${name}${suffix}" .
             if [[ "${goos}" == windows ]]; then

@@ -1,4 +1,4 @@
-module github.com/zenobi-us/zot-usage-limites
+module github.com/zenobi-us/zot-usage-limits
 
 go 1.25.0
 

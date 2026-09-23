@@ -1,5 +1,5 @@
 {
-  "name": "zot-usage-limites",
+  "name": "zot-usage-limits",
   "version": "0.1.0",
   "exec": "go",
   "args": ["run", "main.go"],

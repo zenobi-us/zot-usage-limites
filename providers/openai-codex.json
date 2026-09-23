@@ -10,7 +10,7 @@
     "url": "https://chatgpt.com/backend-api/wham/usage",
     "headers": {
       "chatgpt-account-id": "$auth.account_id",
-      "originator": "zot-usage-limites"
+      "originator": "zot-usage-limits"
     }
   },
   "windows": [
